@@ -35,16 +35,23 @@ function mockBrowser () {
 
   global.window = window
   global.document = window.document
-  global.navigator = {
-    userAgent: 'node.js'
-  }
+  // Define the navigator property using Object.defineProperty
+  Object.defineProperty(global, 'navigator', {
+    value: {
+      userAgent: 'node.js',
+    },
+    writable: false,
+    enumerable: true,
+    configurable: true,
+  });
+
   global.requestAnimationFrame = function (callback) {
-    return setTimeout(callback, 0)
-  }
+    return setTimeout(callback, 0);
+  };
   global.cancelAnimationFrame = function (id) {
-    clearTimeout(id)
-  }
-  copyProps(window, global)
+    clearTimeout(id);
+  };
+  copyProps(window, global);
 }
 
-mockBrowser()
+mockBrowser();
